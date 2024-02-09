@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sample/pages/home.dart';
-import 'package:sample/main.dart';
+import 'package:BMI_Tracker/pages/home.dart';
+import 'package:BMI_Tracker/main.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
+
 
 class BmiShow extends StatefulWidget {
   const BmiShow({super.key});
@@ -16,6 +20,7 @@ class _BmiShowState extends State<BmiShow> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue[400],
+          //automaticallyImplyLeading: false,
           title: Text('Calculated BMI',
             style: TextStyle(
               color: Colors.black,
@@ -24,8 +29,8 @@ class _BmiShowState extends State<BmiShow> {
           ),
         ),
       
-        body: SingleChildScrollView(
-          child: Column(
+
+          body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -42,7 +47,6 @@ class _BmiShowState extends State<BmiShow> {
                       child: Column(
                         children: [
                           Text('BMI Details',
-                      
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 25.0,
@@ -65,17 +69,73 @@ class _BmiShowState extends State<BmiShow> {
                     ),
                 ),
               ),
+
               SizedBox(height: 20.0),
-              
-              Text('data')
-              
+
+              Container(
+                padding: EdgeInsets.all(16.0),
+                width: double.infinity,
+                height: 350,
+                child: SfCartesianChart(
+                  series: <CartesianSeries>[
+                    ColumnSeries<weightdata, int>(
+                      dataSource: getColumnData(),
+                      xValueMapper: (weightdata data, _) => data.day,
+                      yValueMapper: (weightdata data, _) => data.weight,
+                    ),
+                  ],
+                ),
+              ),
+
+
+
+
+              SizedBox(height: 20.0),
+              ElevatedButton.icon(
+                  onPressed: (){
+                      Navigator.pushNamed(context, '/addDetails');
+                  },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[400]!),
+                ),
+                  label: Text('ADD',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+              )
             ],
           ),
-        ),
-      
-      
-      
       ),
     );
   }
+}
+
+class weightdata{
+  late int day;
+  late int weight;
+  weightdata(this.day,this.weight);
+
+}
+
+dynamic getColumnData(){
+
+  List<weightdata> columData=<weightdata>[
+
+    weightdata(1, 73),
+    weightdata(5, 78),
+    weightdata(2, 75),
+    weightdata(8, 79),
+    weightdata(1, 80),
+
+
+  ];
+
+  return columData;
 }

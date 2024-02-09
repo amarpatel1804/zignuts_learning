@@ -1,6 +1,7 @@
+import 'package:BMI_Tracker/pages/addDetails.dart';
+import 'package:BMI_Tracker/pages/bmiShow.dart';
 import 'package:flutter/material.dart';
-import 'package:sample/pages/bmiShow.dart';
-import 'package:sample/pages/home.dart';
+import 'package:BMI_Tracker/pages/home.dart';
 
 void main() => runApp(MaterialApp(
   home: Home(),
@@ -8,6 +9,7 @@ void main() => runApp(MaterialApp(
   routes: {
     '/home': (context) => Home(),
     '/bmiShow': (context) => BmiShow(),
+    '/addDetails':(context)=>AddDetails(),
   },
 ));
 
